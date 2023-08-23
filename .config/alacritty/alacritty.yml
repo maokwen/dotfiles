@@ -1,0 +1,7 @@
+window:
+  padding:
+    x: 10
+    y: 10
+font:
+  family: cascadia code pl
+  size: 12
