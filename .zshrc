@@ -28,4 +28,8 @@ eval "$(zoxide init zsh)"
 alias ls=exa
 alias vi=nvim
 alias vim=vim
+alias cat=bat
+alias tree=broot
 
+
+source /home/mao/.config/broot/launcher/bash/br

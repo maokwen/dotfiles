@@ -1,0 +1,37 @@
+[Default Applications]
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+x-scheme-handler/chrome=firefox.desktop
+text/html=firefox.desktop
+application/x-extension-htm=firefox.desktop
+application/x-extension-html=firefox.desktop
+application/x-extension-shtml=firefox.desktop
+application/xhtml+xml=firefox.desktop
+application/x-extension-xhtml=firefox.desktop
+application/x-extension-xht=firefox.desktop
+x-scheme-handler/punch=keet.desktop
+x-scheme-handler/holepunch=keet.desktop
+x-scheme-handler/nxm=/home/mao/.local/share/applications/vortex-downloads-handler.desktop
+x-scheme-handler/nxm-protocol=/home/mao/.local/share/applications/vortex-downloads-handler.desktop
+x-scheme-handler/baiduyunguanjia=baidunetdisk.desktop
+
+image/png=sxiv.desktop
+image/jpeg=sxiv.desktop
+
+text/plain=neovide.desktop
+text/x-log=neovide.desktop
+
+application/epub+zip=foliate.desktop
+
+[Added Associations]
+x-scheme-handler/http=firefox.desktop;
+x-scheme-handler/https=firefox.desktop;
+x-scheme-handler/chrome=firefox.desktop;
+text/html=firefox.desktop;
+application/x-extension-htm=firefox.desktop;
+application/x-extension-html=firefox.desktop;
+application/x-extension-shtml=firefox.desktop;
+application/xhtml+xml=firefox.desktop;
+application/x-extension-xhtml=firefox.desktop;
+application/x-extension-xht=firefox.desktop;
+text/x-log=org.gnome.gedit.desktop;userapp-nvim-GRLHA2.desktop;neovide.desktop;nvim.desktop;

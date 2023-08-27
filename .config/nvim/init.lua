@@ -8,6 +8,10 @@ vim.o.expandtab = true
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 
+vim.wo.wrap = false
+
+vim.g.mapleader = " "
+
 -- neovide
 if vim.g.neovide then
   vim.o.guifont = "Cascadia Mono PL:h12"
@@ -91,9 +95,7 @@ plugins = {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     config = function () 
-      local configs = require("nvim-treesitter.configs")
-
-      configs.setup({
+      require("nvim-treesitter.configs").setup({
           ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html" },
           sync_install = false,
           highlight = { enable = true },
@@ -114,7 +116,20 @@ plugins = {
       { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
       { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
     },
-  }
+  },
+  {
+    "nvim-telescope/telescope.nvim",
+    tag = '0.1.2',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('telescope').setup({})
+      local builtin = require('telescope.builtin')
+      vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+      vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+      vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+      vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+    end,
+  }, 
 }
 
 require("lazy").setup(plugins, opts)

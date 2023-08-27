@@ -1,0 +1,30 @@
+[Personal]
+display-name = "live"
+email = "maokwen@live.com"
+default = true
+sync = true
+sync-folders-strategy = "all"
+
+backend = "imap"
+imap-host = "outlook.office365.com"
+imap-port = 993
+imap-login = "maokwen@live.com"
+imap-auth = "passwd"
+imap-passwd = { keyring = "email-imap-passwd" }
+imap-ssl = true
+imap-starttls = false
+imap-notify-cmd = "notify-send \"Nem email from <sender>\" \"<subject>\""
+imap-notify-query = "NOT SEEN"
+imap-watch-cmds = ["himalaya --account my-account --folder INBOX account sync"]
+
+sender = "smtp"
+smtp-host = "smtp-mail.outlook.com"
+smtp-port = 465
+smtp-login = "maokwen@live.com"
+smtp-auth = "passwd"
+smtp-passwd = { keyring = "email-smtp-passwd" }
+smtp-ssl = true
+smtp-starttls = false
+smtp-notify-cmd = "notify-send \"Nem email from <sender>\" \"<subject>\""
+smtp-notify-query = "NOT SEEN"
+smtp-watch-cmds = ["himalaya --account my-account --folder INBOX account sync"]

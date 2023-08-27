@@ -1,7 +1,40 @@
 window:
   padding:
-    x: 10
-    y: 10
+    x: 5
+    y: 5
 font:
   family: cascadia code pl
   size: 12
+# Dark+
+colors:
+  # Default colors
+  primary:
+    background: '0x1e1e1e'
+    foreground: '0xcccccc'
+
+  # Cursor colors
+  cursor:
+    text:   '0x000000'
+    cursor: '0xfeffff'
+
+  # Normal colors
+  normal:
+    black:   '0x000000'
+    red:     '0xcd3131'
+    green:   '0x0dbc79'
+    yellow:  '0xe5e510'
+    blue:    '0x2472c8'
+    magenta: '0xbc3fbc'
+    cyan:    '0x11a8cd'
+    white:   '0xe5e5e5'
+
+  # Bright colors
+  bright:
+    black:   '0x666666'
+    red:     '0xf14c4c'
+    green:   '0x23d18b'
+    yellow:  '0xf5f543'
+    blue:    '0x3b8eea'
+    magenta: '0xd670d6'
+    cyan:    '0x29b8db'
+    white:   '0xe5e5e5'
