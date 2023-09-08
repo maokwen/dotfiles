@@ -51,20 +51,21 @@
   margin-left: 10px;
   margin-right: 20px;
 }
-.label-ram {
-  font-size: large;
+.metric {
+  //font-size: large;
+  font-size: 18px;
 }
 
 
 .workspace-widget {
 }
 .workspace-entry {
-  //color: #D35D6E;
 }
 .workspace-entry:hover {
   background-color: #1f1f1f;
 }
 .workspace-entry.current {
-  background-color: #2e2e2e;
+  color: #1f1f1f;
+  background-color: #d9d8dc;
 }
 

@@ -6,7 +6,11 @@
     (box :space-evenly false
       (label :text "${workspaces}${current_workspace}" :visible false)
       (for workspace in workspaces
-        (eventbox :onclick "hyprctl dispatch workspace ${workspace.id}" :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}" :width 50
+        (eventbox
+          :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}"
+          :onclick "hyprctl dispatch workspace ${workspace.id}"
+          :onrightclick "hyprctl dispatch movetoworkspace ${workspace.id}"
+          :width 40
             (label :text "${workspace.id}" :limit-width 2 :wrap true))))))
 
 
@@ -19,20 +23,25 @@
   (box :class "sidestuff" :orientation "h" :space-evenly false :halign "end"
     (metric :label ""
             :value volume
-            :onchange "amixer -D pulse sset Master {}%")
+            :onchange "amixer -D pulse sset Master {}%"
+            :onclick "pavucontrol &")
     (metric :label "󰍛"
             :value {EWW_RAM.used_mem_perc}
-            :onchange "")
+            :onchange ""
+            :onclick "alacritty -e btm &")
     (metric :label ""
             :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
-            :onchange "")
+            :onchange ""
+            :onclick "alacritty --hold -e dust --reverse / &")
     time))
 
-(defwidget metric [label value onchange]
+(defwidget metric [label value onchange onclick]
   (box :orientation "h"
        :class "metric"
        :space-evenly false
-    (box :class "label" label)
+    (eventbox :class "label"
+              :onclick onclick
+              label)
     (scale :min 0
            :max 101
            :active {onchange != ""}
@@ -63,6 +72,6 @@
     :x "0%"
     :y "0%"
     :width "100%"
-    :height "30px"
+    :height "25px"
     :anchor "top center")
   (bar))
