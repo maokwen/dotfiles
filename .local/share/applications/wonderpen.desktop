@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=WonderPen
+Exec=wonderpen --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime --enable-webrtc-pipewire-capturer %F
+Terminal=false
+Type=Application
+Icon=wonderpen
+StartupWMClass=WonderPen
+GenericName=WonderPen
+Comment=Powerful and easy-to-use writing app.
+MimeType=x-scheme-handler/wonderpen;
+Categories=Utility;

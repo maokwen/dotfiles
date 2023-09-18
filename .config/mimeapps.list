@@ -18,11 +18,12 @@ image/png=sxiv.desktop
 image/jpeg=sxiv.desktop
 text/plain=neovide.desktop
 text/x-log=neovide.desktop
-application/epub+zip=foliate.desktop
+application/epub+zip=koreader.desktop
 application/pdf=mupdf.desktop
 application/xml=neovide.desktop
 application/octet-stream=imhex.desktop
 application/vnd.tcpdump.pcap=imhex.desktop
+modrinth=modrinth-app-handler.desktop
 
 [Added Associations]
 x-scheme-handler/http=firefox.desktop;
@@ -40,3 +41,4 @@ application/pdf=mupdf.desktop;
 application/xml=neovide.desktop;
 application/octet-stream=neovide.desktop;imhex.desktop;
 application/vnd.tcpdump.pcap=imhex.desktop;
+application/epub+zip=calibre-ebook-viewer.desktop;koreader.desktop;

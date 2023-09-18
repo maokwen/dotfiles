@@ -9,7 +9,6 @@
         (eventbox
           :class "workspace-entry ${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}"
           :onclick "hyprctl dispatch workspace ${workspace.id}"
-          :onrightclick "hyprctl dispatch movetoworkspace ${workspace.id}"
           :width 40
             (label :text "${workspace.id}" :limit-width 2 :wrap true))))))
 
@@ -48,7 +47,7 @@
            :value value
            :onchange onchange)))
 
-(defpoll volume :interval "1s"
+(defpoll volume :interval "2s"
   "scripts/getvol")
 
 (defpoll time :interval "10s"
