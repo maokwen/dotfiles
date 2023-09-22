@@ -20,35 +20,40 @@
 
 (defwidget sidestuff []
   (box :class "sidestuff" :orientation "h" :space-evenly false :halign "end"
-    (metric :label ""
+    (metric :label vol_icon
             :value volume
-            :onchange "amixer -D pulse sset Master {}%"
-            :onclick "pavucontrol &")
+            :onchange "scripts/volume --set {}"
+            :oniconclick "scripts/volume --toggle"
+            :onscaleclick "pavucontrol &")
     (metric :label "󰍛"
             :value {EWW_RAM.used_mem_perc}
             :onchange ""
-            :onclick "alacritty -e btm &")
-    (metric :label ""
-            :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
-            :onchange ""
-            :onclick "alacritty --hold -e dust --reverse / &")
+            :oniconclick "alacritty -e btm &"
+            :onscaleclick "")
     time))
 
-(defwidget metric [label value onchange onclick]
+(defwidget metric [label value onchange oniconclick onscaleclick]
   (box :orientation "h"
        :class "metric"
        :space-evenly false
     (eventbox :class "label"
-              :onclick onclick
+              :onclick oniconclick
               label)
-    (scale :min 0
+    (eventbox :onclick onscaleclick
+      (scale :min 0
            :max 101
            :active {onchange != ""}
            :value value
-           :onchange onchange)))
+           :onchange onchange))))
 
-(defpoll volume :interval "2s"
-  "scripts/getvol")
+(defpoll vol_icon 
+  :interval "2s"
+  "scripts/volume --icon")
+
+(defpoll volume
+  :interval "2s"
+  :initial "0"
+  "scripts/volume --get")
 
 (defpoll time :interval "10s"
   "date '+%H:%M %b %d, %Y'")
