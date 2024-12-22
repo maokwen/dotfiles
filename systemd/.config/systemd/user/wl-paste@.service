@@ -1,0 +1,10 @@
+[Unit]
+Description=Wayland paste service
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/wl-paste --type %i --watch chiphist store
+Restart=on-failure
+

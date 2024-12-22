@@ -1,0 +1,11 @@
+[Unit]
+Description=Flexible Input Method Framework
+Documentation=man:fcitx(1)
+Conflicts=ibus.service
+
+[Service]
+ExecStart=/usr/bin/fcitx5 -D --keep --replace
+Restart=on-failure
+
+[Install]
+Alias=input-method.service

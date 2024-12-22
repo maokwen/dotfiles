@@ -1,0 +1,12 @@
+[Unit]
+Description=Xwayland client
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/xwayland-satellite
+Restart=on-failure
+
+[Install]
+Alias=xwayland.service

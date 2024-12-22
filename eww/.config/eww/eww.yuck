@@ -1,0 +1,133 @@
+(deflisten outputs
+    :initial "[]" "niri msg -j outputs")
+
+(deflisten
+    workspaces :initial "[]" "niri msg -j workspaces | jq 'sort_by(.id)'")
+
+(defpoll volume
+    :interval "2s"
+    :initial 0
+    "amixer sget Master | tail -n1 | awk -F ' ' '{print $4}' | tr -d '[]%' ")
+
+(defpoll mute
+    :interval "2s"
+    :initial 0
+    "amixer sget Master | tail -n1 | awk -F ' ' '{print $6}' | tr -d '[]%' ")
+
+(defpoll time
+    :interval "10s" "date '+%H:%M %b %d, %Y'")
+
+(defvar vol_icon_unmute "󰕾")
+
+(defvar vol_icon_mute "󰝟")
+
+(deflisten focused-window "niri msg -j focused-window")
+
+(defwidget workspaces []
+    (eventbox
+        :onscroll "niri msg action focus-workspace-{}"
+        :class "workspaces-widget"
+        (box
+            :space-evenly false
+            (for workspace in workspaces
+                (eventbox
+                    :class "workspace-entry ${workspace.is_active == true? "workspace-entry-actived" : ""} "
+                    :onclick "niri msg action focus-workspace ${workspace.id}"
+                    :width 40
+                    (label
+                        :text "${workspace.id}"
+                        :limit-width 2
+                        :wrap true))))))
+
+(defwidget title []
+    (box
+        (label
+            :text "${focused-window.title ?: "..."}")))
+
+(defwidget sidestuff []
+    (box
+        :class "sidestuff"
+        :orientation "h"
+        :space-evenly false
+        :halign "end"
+        (metric
+            :label "󰍛"
+            :value {EWW_CPU.avg}
+            :onchange ""
+            :oniconclick "alacritty -e btm &"
+            :onscaleclick "")
+        (metric
+            :label ""
+            :value {EWW_RAM.used_mem_perc}
+            :onchange ""
+            :oniconclick "alacritty -e btm &"
+            :onscaleclick "")
+        (metric
+            :label "󰁹"
+            :value {EWW_BATTERY["BAT0"].capacity}
+            :onchange ""
+            :oniconclick ""
+            :onscaleclick "")
+        (metric
+            :label "${ mute == "on" ? vol_icon_unmute : vol_icon_mute }"
+            :value volume
+            :onchange "amixer sset Master {}%"
+            :oniconclick "amixer sset Master toggle"
+            :onscaleclick "pavucontrol &")
+        time
+        ))
+
+(defwidget capacity [label value onclick]
+    (box
+        :orientation "h"
+        :class "capacity"
+        :space-evenly false
+        (eventbox
+            :class "label"
+            :onclick onclick
+            label)
+        (eventbox
+            :onclick onclick
+            (progress
+                :orientation "h"
+                :value 50))))
+
+(defwidget metric [label value onchange oniconclick onscaleclick]
+    (box
+        :orientation "h"
+        :class "metric"
+        :space-evenly false
+        (eventbox
+            :class "label"
+            :onclick oniconclick
+            label)
+        (eventbox
+            :onclick onscaleclick
+            (scale :min 0
+                :max 100
+                :active {onchange != ""}
+                :value value
+                :onchange onchange))))
+
+
+(defwidget bar []
+    (centerbox
+        :orientation "h"
+        (workspaces)
+        (title)
+        (sidestuff)))
+
+(defwindow
+    bar
+    :exclusive true
+    :windowtype "dock"
+    :focusable false
+    :monitor 0
+    :geometry (geometry
+        :x "0%"
+        :y "0%"
+        :width "100%"
+        :height "25px"
+        :anchor "top center")
+    (bar))
+

@@ -1,0 +1,263 @@
+input {
+    keyboard {
+        xkb {
+        }
+    }
+
+    touchpad {
+        tap
+        dwt
+        natural-scroll
+        scroll-factor 0.5
+        accel-speed 0.3
+    }
+
+    mouse {
+        // accel-speed 0.2
+    }
+
+    focus-follows-mouse max-scroll-amount="10%"
+}
+
+output "eDP-1" {
+    mode "3072x1920@165.002"
+    scale 2
+    transform "normal"
+    position x=1920 y=0
+    variable-refresh-rate on-demand=true
+}
+
+output "DP-1" {
+    mode "1920x1080@75.002"
+    scale 1
+    transform "normal"
+    position x=0 y=0
+}
+
+switch-events {
+  lid-close { spawn "notify-send" "lid closed"; }
+  lid-open { spawn "notify-send" "lid open"; }
+}
+
+layout {
+    gaps 12
+
+    center-focused-column "never"
+    always-center-single-column
+    //empty-workspace-above-first // sence 0.1.11
+
+    preset-column-widths {
+        proportion 0.35
+        proportion 0.5
+        proportion 0.6
+        proportion 1.0
+    }
+    default-column-width { proportion 0.5; }
+    preset-window-heights {
+        proportion 0.35
+        proportion 0.5
+        proportion 0.6
+        proportion 1.0
+    }
+
+    focus-ring {
+        off
+        width 2
+        active-color "#ee4444"
+        inactive-color "#595959"
+    }
+
+    border {
+        width 2
+        active-color "#ee4444"
+        inactive-color "#505050"
+    }
+}
+
+environment {
+    ELECTRON_OZONE_PLATFORM_HINT "wayland" 
+    QT_QPA_PLATFORM "wayland;xcb"
+    SDL_VIDEODRIVER "wayland"
+    XDG_VIDEODRIVER "wayland"
+    DISPLAY ":0"
+}
+
+cursor {
+    xcursor-theme "Bibata-Modern-Classic"
+    xcursor-size 20
+    hide-when-typing
+    hide-after-inactive-ms 3000
+}
+
+prefer-no-csd
+
+screenshot-path "~/Pictures/Screenshots/screenshot-%yyyy-%MM-%dd-%hh-%mm-%ss.png"
+
+animations {
+}
+
+binds {
+    // terminal
+    //Mod+T { spawn "kitty"; }
+    Mod+T { spawn "foot"; }
+    
+    // file explorer
+    Mod+E { spawn "thunar"; }
+    
+    // app launcher
+    Mod+D { spawn "rofi" "-show" "drun"; }
+    //Mod+D { spawn "bemenu-run" "--ignorecase" "--list" "10" "--fn" "Monaspace Krypton Regular 21"; }
+    //Mod+D { spawn "fuzzel" "-o" "eDP-1"; }
+    
+    // clipboard manager
+    Mod+V { spawn "sh" "-c" "cliphist list | rofi -dmenu | cliphist decode | wl-copy"; }
+
+    // Mod-Shift-/, which is usually the same as Mod-?,
+    // shows a list of important hotkeys.
+    Mod+Shift+Slash { show-hotkey-overlay; }
+
+    // example - volume control
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+
+    // close window
+    Mod+Q { close-window; }
+
+    // focus window
+    Mod+H           { focus-column-left; }
+    Mod+L           { focus-column-right; }
+    Mod+J           { focus-window-or-workspace-down; }
+    Mod+K           { focus-window-or-workspace-up; }
+    Mod+Shift+6     { focus-column-first; }
+    Mod+Shift+4     { focus-column-last; }
+
+
+    // move window
+    Mod+Ctrl+H          { move-column-left; }
+    Mod+Ctrl+L          { move-column-right; }
+    Mod+Ctrl+J          { move-window-down-or-to-workspace-down; }
+    Mod+Ctrl+K          { move-window-up-or-to-workspace-up; }
+    Mod+Ctrl+Shift+6    { move-column-to-first; }
+    Mod+Ctrl+Shift+4    { move-column-to-last; }
+
+    // focus on monitor
+    Mod+Left  { focus-monitor-left; }
+    Mod+Down  { focus-monitor-down; }
+    Mod+Up    { focus-monitor-up; }
+    Mod+Right { focus-monitor-right; }
+
+    // move to monitor
+    Mod+Ctrl+Left  { move-column-to-monitor-left; }
+    Mod+Ctrl+Down  { move-column-to-monitor-down; }
+    Mod+Ctrl+Up    { move-column-to-monitor-up; }
+    Mod+Ctrl+Right { move-column-to-monitor-right; }
+
+    // focus workspace
+    Mod+U           { focus-workspace-down; }
+    Mod+I           { focus-workspace-up; }
+
+    // move workspace
+    Mod+Ctrl+U         { move-workspace-down; }
+    Mod+Shift+I         { move-workspace-up; }
+
+    // resize window
+    Mod+R       { switch-preset-column-width; }
+    Mod+Ctrl+R  { switch-preset-window-height; }
+    Mod+F       { maximize-column; }
+    Mod+Ctrl+F  { fullscreen-window; }
+
+    // center window
+    Mod+C { center-column; }
+
+    // screenshot
+    Print { screenshot; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print { screenshot-window; }
+
+    // exit
+    Mod+Shift+E { quit; }
+    Ctrl+Alt+Delete { quit; }
+
+    // lock screen & power of monitor
+    Mod+Shift+L { spawn "swaylock"; }
+    Mod+Shift+P { power-off-monitors; }
+
+    // consume or expel
+    Mod+Comma  { consume-or-expel-window-left; }
+    Mod+Period { consume-or-expel-window-right; }
+
+
+
+    // examples
+
+    // You can bind mouse wheel scroll ticks using the following syntax.
+    // These binds will change direction based on the natural-scroll setting.
+    //
+    // To avoid scrolling through workspaces really fast, you can use
+    // the cooldown-ms property. The bind will be rate-limited to this value.
+    // You can set a cooldown on any bind, but it's most useful for the wheel.
+    Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+
+    Mod+WheelScrollRight      { focus-column-right; }
+    Mod+WheelScrollLeft       { focus-column-left; }
+    Mod+Ctrl+WheelScrollRight { move-column-right; }
+    Mod+Ctrl+WheelScrollLeft  { move-column-left; }
+
+    // Usually scrolling up and down with Shift in applications results in
+    // horizontal scrolling; these binds replicate that.
+    Mod+Shift+WheelScrollDown      { focus-column-right; }
+    Mod+Shift+WheelScrollUp        { focus-column-left; }
+    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+
+    // Similarly, you can bind touchpad scroll "ticks".
+    // Touchpad scrolling is continuous, so for these binds it is split into
+    // discrete intervals.
+    // These binds are also affected by touchpad's natural-scroll, so these
+    // example binds are "inverted", since we have natural-scroll enabled for
+    // touchpads by default.
+    // Mod+TouchpadScrollDown { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02+"; }
+    // Mod+TouchpadScrollUp   { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.02-"; }
+
+    // You can refer to workspaces by index. However, keep in mind that
+    // niri is a dynamic workspace system, so these commands are kind of
+    // "best effort". Trying to refer to a workspace index bigger than
+    // the current workspace count will instead refer to the bottommost
+    // (empty) workspace.
+    //
+    // For example, with 2 workspaces + 1 empty, indices 3, 4, 5 and so on
+    // will all refer to the 3rd workspace.
+}
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+window-rule {
+    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+    default-column-width {}
+}
+
+window-rule {
+    match app-id="^foot"
+    opacity 0.85
+}
+
+window-rule {
+    match app-id="kitty"
+    opacity 0.85
+}
+
+// Example: block out two password managers from screen capture.
+/-window-rule {
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    match app-id=r#"^org\.gnome\.World\.Secrets$"#
+
+    block-out-from "screen-capture"
+}
+
