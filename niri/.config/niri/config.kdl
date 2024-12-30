@@ -35,8 +35,8 @@ output "DP-1" {
 }
 
 switch-events {
-  lid-close { spawn "notify-send" "lid closed"; }
-  lid-open { spawn "notify-send" "lid open"; }
+  //lid-close { spawn "notify-send" "lid closed"; }
+  //lid-open { spawn "notify-send" "lid open"; }
 }
 
 layout {
@@ -80,6 +80,7 @@ environment {
     SDL_VIDEODRIVER "wayland"
     XDG_VIDEODRIVER "wayland"
     DISPLAY ":0"
+    XDG_CURRENT_DESKTOP "niri"
 }
 
 cursor {
@@ -100,17 +101,17 @@ binds {
     // terminal
     //Mod+T { spawn "kitty"; }
     Mod+T { spawn "foot"; }
-    
+
     // file explorer
     Mod+E { spawn "thunar"; }
-    
+
     // app launcher
     Mod+D { spawn "rofi" "-show" "drun"; }
     //Mod+D { spawn "bemenu-run" "--ignorecase" "--list" "10" "--fn" "Monaspace Krypton Regular 21"; }
     //Mod+D { spawn "fuzzel" "-o" "eDP-1"; }
-    
+
     // clipboard manager
-    Mod+V { spawn "sh" "-c" "cliphist list | rofi -dmenu | cliphist decode | wl-copy"; }
+    Mod+V { spawn "sh" "-c" "cliphist list | rofi -dmenu -display-columns 2 -p clip | cliphist decode | wl-copy"; }
 
     // Mod-Shift-/, which is usually the same as Mod-?,
     // shows a list of important hotkeys.
@@ -187,7 +188,6 @@ binds {
     // consume or expel
     Mod+Comma  { consume-or-expel-window-left; }
     Mod+Period { consume-or-expel-window-right; }
-
 
 
     // examples

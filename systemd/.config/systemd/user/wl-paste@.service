@@ -5,6 +5,6 @@ After=graphical-session.target
 Requisite=graphical-session.target
 
 [Service]
-ExecStart=/usr/bin/wl-paste --type %i --watch chiphist store
+ExecStart=/usr/bin/wl-paste --type %i --watch cliphist store
 Restart=on-failure
 

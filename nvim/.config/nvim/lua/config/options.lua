@@ -18,3 +18,5 @@ if vim.g.neovide then
   vim.g.neovide_input_ime = true
   vim.g.neovide_cursor_animation_length = 0.15
 end
+
+vim.g.lazyvim_picker = "fzf"

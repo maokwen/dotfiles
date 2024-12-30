@@ -1,0 +1,11 @@
+configuration {
+
+}
+
+@theme "gruvbox-dark"
+
+* {
+    normal-background:           @background;
+    alternate-normal-background: @background;
+}
+
