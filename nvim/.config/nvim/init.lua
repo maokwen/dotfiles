@@ -104,7 +104,7 @@ plugins = {
     end,
   },
   -- icons
-  { 'echasnovski/mini.icons', version = false, config = { style = 'glyph' } },
+  { 'echasnovski/mini.icons', version = false },
   -- which key
   {
     "folke/which-key.nvim",
@@ -183,14 +183,20 @@ plugins = {
   -- lsp
   {
     'neovim/nvim-lspconfig',
+  },
+  {
     "williamboman/mason.nvim",
+  },
+  {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { 'saghen/blink.cmp' },
+    lazy = false,
   
     -- example using `opts` for defining servers
     opts = {
       servers = {
-        lua_ls = {}
+        lua_ls = {},
+        clangd = {},
       }
     },
     config = function(_, opts)
