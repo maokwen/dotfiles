@@ -1,0 +1,396 @@
+{
+    "log": {
+        "disabled": false,
+        "level": "warn",
+        #"output": "sing-box.log",
+        "timestamp": true
+    },
+    "dns": {
+        "servers": [
+            {
+                "tag": "dns_direct",
+                "address": "https://223.5.5.5/dns-query",
+                "address_resolver": "dns_direct_resolver",
+                "detour": "direct"
+            },
+            {
+                "tag": "dns_direct_resolver",
+                "address": "udp://223.5.5.5",
+                "detour": "direct"
+            },
+            {
+                "tag": "dns_proxy",
+                "address": "tls://8.8.8.8",
+                "address_resolver": "dns_proxy_resolver",
+                "detour": "select"
+            },
+            {
+                "tag": "dns_proxy_resolver",
+                "address": "8.8.8.8",
+                "detour": "select"
+            }
+        ],
+        "rules": [
+            # for querying proxy server (fallback)
+            {
+                "action": "route",
+                "outbound": "any",
+                "server": "dns_direct"
+            },
+            # rule set (direct)
+            {
+                "action": "route",
+                "rule_set": [
+                    "geosite-cn"
+                ],
+                "server": "dns_direct"
+            },
+            {
+                "action": "route",
+                "rule_set": [
+                    "geosite-private"
+                ],
+                "server": "dns_direct"
+            },
+            # rule set (proxy)
+            {
+                "action": "route",
+                "rule_set": [
+                    "geosite-google",
+                    "geosite-geolocation-!cn"
+                ],
+                "server": "dns_proxy"
+            },
+            # rule set (reject)
+            {
+                "action": "reject",
+                "rule_set": [
+                    "geosite-category-ads-all"
+                ],
+                "method": "default",
+                "no_drop": false
+            },
+            # clash modes
+            {
+                "action": "route",
+                "server": "dns_direct",
+                "clash_mode": "direct"
+            },
+            {
+                "action": "route",
+                "server": "dns_proxy",
+                "clash_mode": "global"
+            }
+        ],
+        "fakeip": {
+            "enabled": false,
+            "inet4_range": "198.18.0.0/15",
+            "inet6_range": "fc00::/18"
+        },
+        "final": "dns_direct",
+        "reverse_mapping": true,
+        "independent_cache": false,
+        "disable_cache": false,
+        "disable_expire": false
+    },
+    "route": {
+        "rules": [
+            {
+                "action": "sniff",
+                "inbound": "tun-in"
+            },
+            # protocol
+            {
+                "action": "hijack-dns",
+                "protocol": "dns"
+            },
+            {
+                "action": "route",
+                "protocol": "bittorrent",
+                "outbound": "direct"
+            },
+            {
+                "action": "route",
+                "protocol": "rdp",
+                "outbound": "direct"
+            },
+            {
+                "action": "route",
+                "protocol": "ssh",
+                "outbound": "direct"
+            },
+            {
+                "action": "route",
+                "protocol": "stun",
+                "outbound": "direct"
+            },
+            # clash modes
+            {
+                "action": "route",
+                "clash_mode": "direct",
+                "outbound": "direct"
+            },
+            {
+                "action": "route",
+                "clash_mode": "global",
+                "outbound": "global"
+            },
+            # reject
+            {
+                "action": "reject",
+                "protocol": "quic"
+            },
+            {
+                "action": "reject",
+                "rule_set": "geosite-category-ads-all"
+            },
+            # direct
+            {
+                "action": "route",
+                "rule_set": [
+                    "geoip-cn",
+                    "geosite-cn",
+                    "geoip-private",
+                    "geosite-private",
+                    "geosite-steam@cn"
+                ],
+                "outbound": "direct"
+            },
+            {
+                "action": "route",
+                "ip_cidr": [
+                    "10.0.8.0/24",
+                    "10.0.9.0/24",
+                    "10.0.10.0/24"
+                ],
+                "outbound": "direct"
+            },
+            # select
+            {
+                "action": "route",
+                "rule_set": [
+                    "geoip-google",
+                    "geosite-google",
+                    "geoip-cloudflare",
+                    "geosite-cloudflare",
+                    "geoip-netflix",
+                    "geosite-netflix",
+                    "geoip-telegram",
+                    "geosite-telegram",
+                    "geosite-github",
+                    "geosite-openai",
+                    "geosite-geolocation-!cn"
+                ],
+                "outbound": "select"
+            }
+        ],
+        "rule_set": [
+            # cn
+            {
+                "tag": "geoip-cn",
+                "type": "remote",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
+                "format": "binary",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-cn",
+                "type": "remote",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
+                "format": "binary",
+                "download_detour": "direct"
+            },
+            # private
+            {
+                "tag": "geoip-private",
+                "type": "remote",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/private.srs",
+                "format": "binary",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-private",
+                "type": "remote",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs",
+                "format": "binary",
+                "download_detour": "direct"
+            },
+            # google
+            {
+                "tag": "geoip-google",
+                "type": "remote",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/google.srs",
+                "format": "binary",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-google",
+                "type": "remote",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/google.srs",
+                "format": "binary",
+                "download_detour": "direct"
+            },
+            # cloudflare
+            {
+                "tag": "geoip-cloudflare",
+                "type": "remote",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cloudflare.srs",
+                "format": "binary",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-cloudflare",
+                "type": "remote",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cloudflare.srs",
+                "format": "binary",
+                "download_detour": "direct"
+            },
+            # netflix
+            {
+                "tag": "geoip-netflix",
+                "type": "remote",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/netflix.srs",
+                "format": "binary",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-netflix",
+                "type": "remote",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/netflix.srs",
+                "format": "binary",
+                "download_detour": "direct"
+            },
+            # telegram
+            {
+                "tag": "geoip-telegram",
+                "type": "remote",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/telegram.srs",
+                "format": "binary",
+                "download_detour": "direct"
+            },
+            {
+                "tag": "geosite-telegram",
+                "type": "remote",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/telegram.srs",
+                "format": "binary",
+                "download_detour": "direct"
+            },
+            # github
+            {
+                "tag": "geosite-github",
+                "type": "remote",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/github.srs",
+                "format": "binary",
+                "download_detour": "direct"
+            },
+            # openai
+            {
+                "tag": "geosite-openai",
+                "type": "remote",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/openai.srs",
+                "format": "binary",
+                "download_detour": "direct"
+            },
+            # steam@cn
+            {
+                "tag": "geosite-steam@cn",
+                "type": "remote",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/steam@cn.srs",
+                "format": "binary",
+                "download_detour": "direct"
+            },
+            # ads
+            {
+                "tag": "geosite-category-ads-all",
+                "type": "remote",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ads-all.srs",
+                "format": "binary",
+                "download_detour": "direct"
+            },
+            # !cn
+            {
+                "tag": "geosite-geolocation-!cn",
+                "type": "remote",
+                "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
+                "format": "binary",
+                "download_detour": "direct"
+            }
+        ],
+        "auto_detect_interface": true,
+        "final": "select"
+    },
+    "experimental": {
+        "clash_api": {
+            "external_controller": "127.0.0.1:20123",
+            "external_ui": "",
+            "external_ui_download_url": "",
+            "external_ui_download_detour": "",
+            "secret": "mknjbh",
+            "default_mode": "rule",
+            "access_control_allow_origin": [
+                "*"
+            ],
+            "access_control_allow_private_network": false
+        },
+        "cache_file": {
+            "enabled": true,
+            "path": "cache.db",
+            "cache_id": "",
+            "store_fakeip": true,
+            "store_rdrc": true,
+            "rdrc_timeout": "7d"
+        }
+    },
+    "inbounds": [
+        # tun
+        {
+            "type": "tun",
+            "tag": "tun-in",
+            "interface_name": "tun0",
+            "address": [
+                "172.18.0.1/30",
+                "fdfe:dcba:9876::1/126"
+            ],
+            "mtu": 9000,
+            "auto_route": true,
+            "strict_route": true,
+            # for transparent proxy in linux server
+            # "auto_redirect": true,
+            # "route_address_set": [],
+            # "include_interface": [],
+            # "include_uid_range": [],
+            "route_address": [
+                "0.0.0.0/1",
+                "128.0.0.0/1",
+                "::/1",
+                "8000::/1"
+            ],
+            "endpoint_independent_nat": false,
+            "stack": "mixed",
+            "platform": {
+                "http_proxy": {
+                    "enabled": false,
+                    "server": "127.0.0.1",
+                    "server_port": 8080
+                }
+            }
+        },
+        # mixed
+        {
+            "type": "mixed",
+            "tag": "mixed-in",
+            "listen": "127.0.0.1",
+            "listen_port": 20122,
+            "tcp_fast_open": true,
+            "tcp_multi_path": false,
+            "udp_fragment": false,
+            "users": []
+        }
+    ],
+    "outbounds": [
+        {
+            "type": "direct",
+            "tag": "direct"
+        }
+    ]
+}

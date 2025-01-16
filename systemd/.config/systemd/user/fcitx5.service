@@ -2,6 +2,7 @@
 Description=Flexible Input Method Framework
 Documentation=man:fcitx(1)
 Conflicts=ibus.service
+After=graphical-session.target
 
 [Service]
 ExecStart=/usr/bin/fcitx5 -D --keep --replace

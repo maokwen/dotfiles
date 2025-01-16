@@ -1,0 +1,4 @@
+--no-folder
+--selector rofi
+--clipboarder wl-copy
+--typer ydotool

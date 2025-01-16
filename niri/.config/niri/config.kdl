@@ -1,5 +1,7 @@
 input {
     keyboard {
+        repeat-delay 300
+        repeat-rate 50
         xkb {
         }
     }
@@ -44,20 +46,16 @@ layout {
 
     center-focused-column "never"
     always-center-single-column
-    //empty-workspace-above-first // sence 0.1.11
+    empty-workspace-above-first
 
     preset-column-widths {
-        proportion 0.35
-        proportion 0.5
-        proportion 0.6
         proportion 1.0
+        proportion 0.5
     }
     default-column-width { proportion 0.5; }
     preset-window-heights {
-        proportion 0.35
-        proportion 0.5
-        proportion 0.6
         proportion 1.0
+        proportion 0.5
     }
 
     focus-ring {
@@ -107,6 +105,7 @@ binds {
 
     // app launcher
     Mod+D { spawn "rofi" "-show" "drun"; }
+    Mod+B { spawn "rofi-rbw"; }
     //Mod+D { spawn "bemenu-run" "--ignorecase" "--list" "10" "--fn" "Monaspace Krypton Regular 21"; }
     //Mod+D { spawn "fuzzel" "-o" "eDP-1"; }
 
