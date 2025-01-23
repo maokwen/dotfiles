@@ -126,8 +126,8 @@ binds {
     Mod+Q { close-window; }
 
     // focus window
-    Mod+H           { focus-column-or-monitor-left; }
-    Mod+L           { focus-column-or-monitor-right; }
+    Mod+H           { focus-column-left; }
+    Mod+L           { focus-column-right; }
     Mod+J           { focus-window-or-workspace-down; }
     Mod+K           { focus-window-or-workspace-up; }
     Mod+Shift+6     { focus-column-first; }
@@ -143,10 +143,10 @@ binds {
     Mod+Ctrl+Shift+4    { move-column-to-last; }
 
     // focus on monitor
-    // Mod+Left  { focus-monitor-left; }
-    // Mod+Down  { focus-monitor-down; }
-    // Mod+Up    { focus-monitor-up; }
-    // Mod+Right { focus-monitor-right; }
+    Mod+Left  { focus-monitor-left; }
+    Mod+Down  { focus-monitor-down; }
+    Mod+Up    { focus-monitor-up; }
+    Mod+Right { focus-monitor-right; }
 
     // move to monitor
     Mod+Ctrl+Left  { move-column-to-monitor-left; }
