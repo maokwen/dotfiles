@@ -50,6 +50,7 @@
         :orientation "h"
         :space-evenly false
         :halign "end"
+        (systray)
         (metric
             :label "󰍛"
             :value {EWW_CPU.avg}

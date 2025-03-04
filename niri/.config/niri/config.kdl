@@ -21,19 +21,26 @@ input {
     focus-follows-mouse max-scroll-amount="10%"
 }
 
-output "eDP-1" {
-    mode "3072x1920@165.002"
-    scale 2
-    transform "normal"
-    position x=1920 y=0
-    variable-refresh-rate on-demand=true
-}
-
 output "DP-1" {
     mode "1920x1080@75.002"
     scale 1
     transform "normal"
     position x=0 y=0
+}
+
+output "DP-2" {
+    mode "1920x1080@75.002"
+    scale 1
+    transform "normal"
+    position x=0 y=0
+}
+
+output "eDP-1" {
+    mode "3072x1920@165.002"
+    scale 2
+    transform "normal"
+    position x=192 y=1080
+    variable-refresh-rate on-demand=true
 }
 
 switch-events {
@@ -101,7 +108,8 @@ binds {
     Mod+T { spawn "foot"; }
 
     // file explorer
-    Mod+E { spawn "thunar"; }
+    //Mod+E { spawn "thunar"; }
+    Mod+E { spawn "cosmic-files"; }
 
     // app launcher
     Mod+D { spawn "rofi" "-show" "drun"; }

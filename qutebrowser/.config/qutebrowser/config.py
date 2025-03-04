@@ -183,7 +183,7 @@ c.editor.command = ["neovide", "{file}", "+{line}"]
 # Page to open if :open -t/-b/-w is used without URL. Use `about:blank`
 # for a blank page.
 # Type: FuzzyUrl
-c.url.default_page = "https://www.google.com/"
+c.url.default_page = "https://start.duckduckgo.com/"
 
 # Search engines which can be used via the address bar.  Maps a search
 # engine name (such as `DEFAULT`, or `ddg`) to a URL with a `{}`
@@ -204,8 +204,8 @@ c.url.default_page = "https://www.google.com/"
 # the search engine name to the search term, e.g. `:open google
 # qutebrowser`.
 # Type: Dict
-c.url.searchengines = {"DEFAULT": "https://www.google.com/?q={}"}
+c.url.searchengines = {"DEFAULT": "https://duckduckgo.com/?q={}"}
 
 # Page(s) to open at the start.
 # Type: List of FuzzyUrl, or FuzzyUrl
-c.url.start_pages = "https://www.google.com/"
+c.url.start_pages = "https://start.duckduckgo.com/"

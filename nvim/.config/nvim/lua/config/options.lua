@@ -7,6 +7,8 @@ vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 
+vim.opt.wrap = false
+
 -- neovide
 if vim.g.neovide then
   vim.o.guifont = "Monaspace Krypton:h11"
