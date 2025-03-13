@@ -1,6 +1,6 @@
 {
 	"layer": "top",
-	"modules-left": ["mpd"],
+	"modules-left": ["tray","mpd"],
 	"modules-center": [],
 	"modules-right": ["network", "pulseaudio", "temperature", "cpu", "memory", "battery", "clock"],
 	"mpd": {
@@ -16,11 +16,13 @@
 		"tooltip": false,
 		"scroll-step": 5,
 		"format": "{icon} {volume}%",
+		"format-muted": "󰝟 {volume}%",
         "format-icons": {
             "headphone": "",
             "headset": "",
             "default": ["", "", ""]
         },
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
 	},
 	"network": {
 		"tooltip": false,
@@ -49,5 +51,8 @@
     "clock": {
         "format": "{:%Y-%m-%d %H:%m}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
-    }
+    },
+    "tray": {
+        "spacing": 10
+    },
 }
