@@ -20,6 +20,8 @@ bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
 bindkey "^[[3~" delete-char
 
+export PATH=$PATH:/opt/android-sdk/platform-tools
+
 # vi mode
 bindkey -v
 source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
@@ -32,6 +34,16 @@ function y() {
 	fi
 	rm -f -- "$tmp"
 }
+
+alias ls='eza'
+alias ll='eza -l --icons --group-directories-first'
+alias la='eza -la --icons'
+alias lt='eza -lT --icons --level=2'
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
 
 # if uwsm check may-start; then
 #     exec uwsm start niri-session

@@ -25,21 +25,21 @@ output "DP-1" {
     mode "1920x1080@75.002"
     scale 1
     transform "normal"
-    position x=0 y=0
+    position x=64 y=0
 }
 
 output "DP-2" {
     mode "1920x1080@75.002"
     scale 1
     transform "normal"
-    position x=0 y=0
+    position x=64 y=0
 }
 
 output "eDP-1" {
     mode "3072x1920@165.002"
-    scale 2
+    scale 1.5
     transform "normal"
-    position x=192 y=1080
+    position x=0 y=1080
     variable-refresh-rate on-demand=true
 }
 
@@ -49,7 +49,7 @@ switch-events {
 }
 
 layout {
-    gaps 12
+    gaps 10
 
     center-focused-column "never"
     always-center-single-column
@@ -68,14 +68,14 @@ layout {
     focus-ring {
         off
         width 2
-        active-color "#ee4444"
+        active-color "#cc241d"
         inactive-color "#595959"
     }
 
     border {
         width 2
-        active-color "#ee4444"
-        inactive-color "#505050"
+        active-color "#d65d0e"
+        inactive-color "#928374"
     }
 }
 
@@ -108,8 +108,8 @@ binds {
     Mod+T { spawn "foot"; }
 
     // file explorer
-    //Mod+E { spawn "thunar"; }
-    Mod+E { spawn "cosmic-files"; }
+    Mod+E { spawn "thunar"; }
+    //Mod+E { spawn "cosmic-files"; }
 
     // app launcher
     Mod+D { spawn "rofi" "-show" "drun"; }

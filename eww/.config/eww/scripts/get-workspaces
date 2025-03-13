@@ -1,9 +1,0 @@
-#!/bin/sh
-
-[[ -z $NIRI_SOCKET ]] && exit 1
-
-echo "EventStream" | socat -u - UNIX-CONNECT:"$NIRI_SOCKET"
-
-socat -u UNIX-CONNECT:"$NIRI_SOCKET" - | while read -r line; do
-    echo line
-done

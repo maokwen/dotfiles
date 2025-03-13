@@ -209,3 +209,5 @@ c.url.searchengines = {"DEFAULT": "https://duckduckgo.com/?q={}"}
 # Page(s) to open at the start.
 # Type: List of FuzzyUrl, or FuzzyUrl
 c.url.start_pages = "https://start.duckduckgo.com/"
+
+config.set("colors.webpage.darkmode.enabled", True)

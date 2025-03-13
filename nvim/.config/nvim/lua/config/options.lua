@@ -11,7 +11,7 @@ vim.opt.wrap = false
 
 -- neovide
 if vim.g.neovide then
-  vim.o.guifont = "Monaspace Krypton:h11"
+  vim.o.guifont = "Monaspace Krypton:h12"
   vim.g.neovide_padding_top = 5
   vim.g.neovide_padding_bottom = 5
   vim.g.neovide_padding_right = 5

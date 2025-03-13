@@ -1,4 +1,0 @@
-niri msg focused-window | rg -o 'Title: ".+"' | cut -d '"' -f 2
-
-
-

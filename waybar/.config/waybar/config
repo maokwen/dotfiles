@@ -1,0 +1,53 @@
+{
+	"layer": "top",
+	"modules-left": ["mpd"],
+	"modules-center": [],
+	"modules-right": ["network", "pulseaudio", "temperature", "cpu", "memory", "battery", "clock"],
+	"mpd": {
+		"tooltip": false,
+		"format": "{stateIcon} {artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})",
+		"format-stopped": "󰓛",
+        "state-icons": {
+            "playing": "",
+            "paused": ""
+        }
+	},
+	"pulseaudio": {
+		"tooltip": false,
+		"scroll-step": 5,
+		"format": "{icon} {volume}%",
+        "format-icons": {
+            "headphone": "",
+            "headset": "",
+            "default": ["", "", ""]
+        },
+	},
+	"network": {
+		"tooltip": false,
+		"format-wifi": " {essid} {ipaddr}",
+		"format-ethernet": " {ipaddr}"
+	},
+	"cpu": {
+		"tooltip": false,
+		"format": " {}%"
+	},
+	"memory": {
+		"tooltip": false,
+		"format": " {}%"
+	},
+    "battery": {
+        "states": {
+            "warning": 40,
+            "critical": 20
+        },
+        "format": "{icon} {capacity}%",
+        "format-full": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "clock": {
+        "format": "{:%Y-%m-%d %H:%m}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    }
+}

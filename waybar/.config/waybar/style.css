@@ -1,0 +1,97 @@
+* {
+    border: none;
+    border-radius: 0;
+    font-family: monospace;
+    font-size: 14px;
+    min-height: 0;
+}
+
+@import "gruvbox.css";
+
+window#waybar {
+    background: rgba(40, 40, 40, 1);
+    border-bottom: 2px solid @black_b;
+    color: @white_b;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    background: transparent;
+    color: @white_b;
+    border-bottom: 3px solid transparent;
+}
+
+#workspaces button.focused {
+    background: @blue;
+    border-bottom: 3px solid @blue;
+}
+
+#mode, #clock, #battery {
+    padding: 0 10px;
+    margin: 0 5px;
+}
+
+#mode {
+    background: @red;
+    border-bottom: 3px solid @white_b;
+}
+
+#clock {
+    color: @orange_b;
+}
+
+#battery {
+    color: @white_b;
+}
+
+#battery.charging {
+    color: @background;
+    background-color: @green;
+}
+
+@keyframes blink {
+    to {
+        background-color: @white_b;
+        color: @background;
+    }
+}
+
+#idle_inhibitor, #pulseaudio, #custom-openvpn, #network, #cpu, #memory, #temperature, #backlight, #battery, #clock, #tray {
+     padding: 0 6px;
+     margin: 0 3px;
+}
+
+#battery.warning:not(.charging) {
+    background: @red;
+    color: @white_b;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#power-profiles-daemon,
+#mpd {
+    margin-left: 4px;
+    margin-right: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}

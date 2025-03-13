@@ -1,18 +1,20 @@
-(deflisten outputs
-    :initial "[]" "niri msg -j outputs")
+(deflisten workspaces-info
+    `python scripts/workspaces.py`)
 
-(deflisten
-    workspaces :initial "[]" "niri msg -j workspaces | jq 'sort_by(.id)'")
+(defpoll focused-window
+    :interval "1s"
+    :initial "{}"
+    `niri msg -j focused-window`)
 
 (defpoll volume
-    :interval "2s"
+    :interval "1s"
     :initial 0
-    "amixer sget Master | tail -n1 | awk -F ' ' '{print $4}' | tr -d '[]%' ")
+    `python scripts/volumectl.py --get`)
 
 (defpoll mute
-    :interval "2s"
+    :interval "1s"
     :initial 0
-    "amixer sget Master | tail -n1 | awk -F ' ' '{print $6}' | tr -d '[]%' ")
+    `python scripts/volumectl.py --mute`)
 
 (defpoll time
     :interval "10s" "date '+%H:%M %b %d, %Y'")
@@ -21,23 +23,26 @@
 
 (defvar vol_icon_mute "󰝟")
 
-(deflisten focused-window "niri msg -j focused-window")
-
 (defwidget workspaces []
-    (eventbox
-        :onscroll "niri msg action focus-workspace-{}"
-        :class "workspaces-widget"
-        (box
-            :space-evenly false
-            (for workspace in workspaces
-                (eventbox
-                    :class "workspace-entry ${workspace.is_active == true? "workspace-entry-actived" : ""} "
-                    :onclick "niri msg action focus-workspace ${workspace.id}"
-                    :width 40
-                    (label
-                        :text "${workspace.id}"
-                        :limit-width 2
-                        :wrap true))))))
+    (box
+        :space-evenly false
+        :spacing 6
+        :orientation "vertical"
+        (for output in workspaces-info
+            (eventbox
+                :class "workspaces-widget"
+                (box
+                    :space-evenly false
+                    :spacing 2
+                    (for workspace in {output["workspaces"]}
+                        (eventbox
+                            :class "workspace-entry ${workspace.is_active == true? "workspace-entry-active" : ""} "
+                            :onclick "niri msg action focus-workspace ${workspace.id}"
+                            :width 40
+                            (label
+                                :text "${workspace.id}"
+                                :limit-width 2
+                                :wrap true))))))))
 
 (defwidget title []
     (box
@@ -70,10 +75,10 @@
             :oniconclick ""
             :onscaleclick "")
         (metric
-            :label "${ mute == "on" ? vol_icon_unmute : vol_icon_mute }"
+            :label "${ mute == "False" ? vol_icon_unmute : vol_icon_mute }"
             :value volume
-            :onchange "amixer sset Master {}%"
-            :oniconclick "amixer sset Master toggle"
+            :onchange "python scripts/volumectl.py --set {}"
+            :oniconclick "python scripts/volumectl.py --toggle"
             :onscaleclick "pavucontrol &")
         time
         ))
@@ -131,4 +136,3 @@
         :height "25px"
         :anchor "top center")
     (bar))
-
