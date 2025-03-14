@@ -40,6 +40,11 @@ alias ll='eza -l --icons --group-directories-first'
 alias la='eza -la --icons'
 alias lt='eza -lT --icons --level=2'
 
+alias tunon='sudo systemctl restart sing-box.service'
+alias tunoff='sudo systemctl stop sing-box.service'
+
+alias hx='helix'
+
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"

@@ -1,0 +1,4 @@
+[[language]]
+name = "c"
+language-servers = [{name = "clangd", except-features=["diagnostics"]}]
+

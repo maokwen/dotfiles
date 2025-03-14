@@ -1,0 +1,13 @@
+theme = "gruvbox_dark_hard"
+
+[editor]
+line-number = "relative"
+mouse = true
+end-of-line-diagnostics = "disable"
+
+[editor.file-picker]
+hidden = false
+
+[editor.lsp]
+enable = true
+

@@ -1,19 +1,30 @@
 import subprocess
 import sys
 
+
 def get_volume():
-    result = subprocess.run(["/usr/bin/wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@"], capture_output=True)
-    print(int(float(result.stdout.strip().split(b' ')[1]) * 100))
+    result = subprocess.run(
+        ["/usr/bin/wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@"], capture_output=True
+    )
+    print(int(float(result.stdout.strip().split(b" ")[1]) * 100))
+
 
 def get_mute():
-    result = subprocess.run(["/usr/bin/wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@"], capture_output=True)
-    print(b'[MUTED]' in result.stdout.strip())
+    result = subprocess.run(
+        ["/usr/bin/wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@"], capture_output=True
+    )
+    print(b"[MUTED]" in result.stdout.strip())
+
 
 def set_volume(value):
-    subprocess.run(["/usr/bin/wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", f"{value / 100}"])
+    subprocess.run(
+        ["/usr/bin/wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", f"{value / 100}"]
+    )
+
 
 def toggle_mute():
     subprocess.run(["/usr/bin/wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", "toggle"])
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

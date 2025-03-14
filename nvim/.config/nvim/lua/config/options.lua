@@ -3,7 +3,7 @@
 -- Add any additional options here
 
 vim.opt.expandtab = true
-vim.opt.tabstop = 4
+vim.opt.tabstop = 8
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 
