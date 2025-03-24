@@ -183,7 +183,7 @@ c.editor.command = ["neovide", "{file}", "+{line}"]
 # Page to open if :open -t/-b/-w is used without URL. Use `about:blank`
 # for a blank page.
 # Type: FuzzyUrl
-c.url.default_page = "https://start.duckduckgo.com/"
+c.url.default_page = "https://chatgpt.com/?temporary-chat=true"
 
 # Search engines which can be used via the address bar.  Maps a search
 # engine name (such as `DEFAULT`, or `ddg`) to a URL with a `{}`
@@ -208,6 +208,6 @@ c.url.searchengines = {"DEFAULT": "https://duckduckgo.com/?q={}"}
 
 # Page(s) to open at the start.
 # Type: List of FuzzyUrl, or FuzzyUrl
-c.url.start_pages = "https://start.duckduckgo.com/"
+c.url.start_pages = "https://chatgpt.com/?temporary-chat=true"
 
 config.set("colors.webpage.darkmode.enabled", True)

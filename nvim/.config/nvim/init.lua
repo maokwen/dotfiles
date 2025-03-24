@@ -19,6 +19,9 @@ vim.keymap.set("n", "<s-d>", ":bdelete<cr>")
 -- tab indent multiple times
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
+-- goto declaration & definition
+vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
 
 -- editor
 vim.o.syntax = 'on'
@@ -53,11 +56,11 @@ vim.o.number = true
 vim.o.relativenumber = true
 
 -- tab
-vim.o.smarttab = true
-vim.o.expandtab = true
+vim.o.expandtab = false
 vim.o.tabstop = 8 -- size of '\t'
-vim.o.softtabstop = 2
-vim.o.shiftwidth = 2
+--vim.o.smarttab = trm.o.expandtab = false
+--vim.o.softtabstop = 4
+--vim.o.shiftwidth = 4
 
 vim.wo.wrap = false
 
@@ -228,6 +231,13 @@ plugins = {
     config = function()
       require("fzf-lua").setup()
     end,
+    keys = {
+	{"<leader>b", mode = { "n" }, function() require"fzf-lua".buffers() end,	desc = "fzf buffers" },	
+	{"<leader>k", mode = { "n" }, function() require"fzf-lua".builtin() end,	desc = "fzf buildin commands" },	
+	{"<leader>f", mode = { "n" }, function() require"fzf-lua".files() end,		desc = "fzf files" },	
+	{"<leader>l", mode = { "n" }, function() require"fzf-lua".live_grep_glob() end,	desc = "fzf grep (live)" },	
+	{"<leader>g", mode = { "n" }, function() require"fzf-lua".grep_project() end,	desc = "fzf grep" },	
+    },
   },
   -- yazi
   {
